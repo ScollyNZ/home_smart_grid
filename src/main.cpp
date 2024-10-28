@@ -22,7 +22,7 @@ class PowerReading{
 
 void initWiFi();
 PowerReading getPowerReading();
-void WriteToDisplay(String text);
+void WriteToDisplay(PowerReading);
 
 void setup() {
   Serial.begin(9600);
@@ -36,22 +36,22 @@ void setup() {
 
 void loop() {
   String text;
-  text = getPowerReading().print();
-  Serial.println(text);
-  WriteToDisplay(text);
+  WriteToDisplay(getPowerReading());
   
   sleep(1);
 }
 
-void WriteToDisplay(String text)
+void WriteToDisplay(PowerReading reading)
 {
   display.clearDisplay();
 
   display.setTextSize(1);
   display.setTextColor(WHITE);
-  display.setCursor(0, 10);
+  display.setCursor(0, 20);
   // Display static text
-  display.println(text);
+  display.println(reading.print());
+  int graphWidth = (reading.load / reading.solar) * SCREEN_WIDTH;
+  display.fillRect(0, 0, graphWidth, 10, WHITE);
   display.display();
 }
 
@@ -86,6 +86,8 @@ PowerReading reading;
 reading.grid = doc["site"]["P_Grid"];
 reading.load = doc["site"]["P_Load"];
 reading.solar = doc["site"]["P_PV"];
+
+reading.load = reading.load * -1;
 
 return reading;
 }
