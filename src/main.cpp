@@ -1,5 +1,7 @@
 #include <Arduino.h>
 #include <WiFi.h>
+#include <HTTPClient.h>
+#include <ArduinoJson.h>
 
 class PowerReading{
   public: 
@@ -18,6 +20,8 @@ PowerReading getPowerReading();
 void setup() {
   Serial.begin(9600);
   initWiFi();
+
+
 }
 
 void loop() {
@@ -38,10 +42,24 @@ void initWiFi() {
 
 PowerReading getPowerReading()
 {
+HTTPClient http;
+JsonDocument doc;
+
+String serverPath = "http://192.168.1.85/status/powerflow";
+http.begin(serverPath.c_str());
+int httpResponseCode = http.GET();
+      
+if (httpResponseCode>0) {
+        String payload = http.getString();
+        deserializeJson(doc, payload);
+}
+
+http.end();
+
 PowerReading reading;
-reading.grid = 100.10;
-reading.load = 200.20;
-reading.solar = 300.30;
+reading.grid = doc["site"]["P_Grid"];
+reading.load = doc["site"]["P_Load"];
+reading.solar = doc["site"]["P_PV"];
 
 return reading;
 }
