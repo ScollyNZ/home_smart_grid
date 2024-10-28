@@ -2,12 +2,13 @@
 #include <WiFi.h>
 #include <HTTPClient.h>
 #include <ArduinoJson.h>
-#include <OLED_I2C.h>
+#include <Adafruit_SSD1306.h>
 
-OLED myOLED(SDA, SCL);
+#define SCREEN_WIDTH 128 // OLED display width, in pixels
+#define SCREEN_HEIGHT 64 // OLED display height, in pixels
 
-extern uint8_t SmallFont[];
-
+// Declaration for an SSD1306 display connected to I2C (SDA, SCL pins)
+Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, -1);
 class PowerReading{
   public: 
     float solar;
@@ -15,27 +16,43 @@ class PowerReading{
     float load;
 
   String print() {
-    return String("Grid: " + String(grid) + " Load: " + String(load) + " Solar: " + solar);
+    return String("Grid: " + String(grid) + "\nLoad: " + String(load) + "\nSolar: " + solar);
   }
 };
 
 void initWiFi();
 PowerReading getPowerReading();
+void WriteToDisplay(String text);
 
 void setup() {
   Serial.begin(9600);
   initWiFi();
-
-  myOLED.begin(SSD1306_128X32);
-  myOLED.setFont(SmallFont);
-  myOLED.clrScr();
-  myOLED.print("Hello, world!", CENTER, 0);
-  myOLED.update();
+  if(!display.begin(SSD1306_SWITCHCAPVCC, 0x3C)) { // Address 0x3D for 128x64
+    Serial.println(F("SSD1306 allocation failed"));
+    for(;;);
+  }
+  delay(2000);
 }
 
 void loop() {
-  Serial.println(getPowerReading().print());
+  String text;
+  text = getPowerReading().print();
+  Serial.println(text);
+  WriteToDisplay(text);
+  
   sleep(1);
+}
+
+void WriteToDisplay(String text)
+{
+  display.clearDisplay();
+
+  display.setTextSize(1);
+  display.setTextColor(WHITE);
+  display.setCursor(0, 10);
+  // Display static text
+  display.println(text);
+  display.display();
 }
 
 void initWiFi() {
