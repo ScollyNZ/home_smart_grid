@@ -1,10 +1,15 @@
 #include <Arduino.h>
 #include <WiFi.h>
 
-struct PowerReading{
-  float solar;
-  float grid;
-  float load;
+class PowerReading{
+  public: 
+    float solar;
+    float grid;
+    float load;
+
+  String print() {
+    return String("Grid: " + String(grid) + " Load: " + String(load) + " Solar: " + solar);
+  }
 };
 
 void initWiFi();
@@ -16,8 +21,8 @@ void setup() {
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
-
+  Serial.println(getPowerReading().print());
+  sleep(1);
 }
 
 void initWiFi() {
@@ -36,7 +41,7 @@ PowerReading getPowerReading()
 PowerReading reading;
 reading.grid = 100.10;
 reading.load = 200.20;
-reading.load = 300.30;
+reading.solar = 300.30;
 
 return reading;
 }
