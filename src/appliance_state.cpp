@@ -27,9 +27,9 @@ void PowerOff::unOverride()
 {
     Serial.println("Cannot un-override; not in Power On Override state.");
 }
-void PowerOff::printCurrentState() const
+String PowerOff::currentStateName()
 {
-    Serial.println("Current State: Power Off");
+    return "Power Off";
 }
 
 void PowerOn::activate()
@@ -58,9 +58,9 @@ void PowerOn::unOverride()
 {
     Serial.println("Cannot un-override; not in Power On Override state.");
 }
-void PowerOn::printCurrentState() const
+String PowerOn::currentStateName()
 {
-    Serial.println("Current State: Power On");
+   return "Power On";
 }
 
 void Inhibited::activate()
@@ -89,9 +89,9 @@ void Inhibited::unOverride()
 {
     Serial.println("Cannot un-override; not in Power On Override state.");
 }
-void Inhibited::printCurrentState() const
+String Inhibited::currentStateName()
 {
-    Serial.println("Current State: Inhibited");
+    return "Inhibited";
 }
 
 void PowerOnOverride::activate()
@@ -120,9 +120,9 @@ void PowerOnOverride::unOverride()
     Serial.println("Transitioning to Power Off state (When no longer overridden).");
     stateMachine->setState(new PowerOff(stateMachine));
 }
-void PowerOnOverride::printCurrentState() const
+String PowerOnOverride::currentStateName()
 {
-    Serial.println("Current State: Power On Override");
+    return "Power On - Override";
 }
 
 // StateMachine implementation
@@ -143,7 +143,7 @@ void StateMachine::inhibit() { currentState->inhibit(); }
 void StateMachine::unInhibit() { currentState->unInhibit(); }
 void StateMachine::overridePower() { currentState->overridePower(); }
 void StateMachine::unOverride() { currentState->unOverride(); }
-void StateMachine::printCurrentState() const { currentState->printCurrentState(); }
+String StateMachine::currentStateName() { return currentState->currentStateName(); }
 
 /*
 void setup()

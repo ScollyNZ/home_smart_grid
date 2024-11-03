@@ -23,7 +23,7 @@ public:
     virtual void unInhibit() = 0;
     virtual void overridePower() = 0;
     virtual void unOverride() = 0;
-    virtual void printCurrentState() const = 0;
+    virtual String currentStateName() = 0;
 };
 
 // Context class
@@ -39,7 +39,7 @@ public:
     void unInhibit();
     void overridePower();
     void unOverride();
-    void printCurrentState() const;
+    String currentStateName();
 
 private:
     State *currentState;
@@ -55,7 +55,7 @@ public:
     void unInhibit() override;
     void overridePower() override;
     void unOverride() override;
-    void printCurrentState() const override;
+    String currentStateName() override;
 
 private:
     StateMachine *stateMachine;
@@ -71,7 +71,7 @@ public:
     void unInhibit() override;
     void overridePower() override;
     void unOverride() override;
-    void printCurrentState() const override;
+    String currentStateName() override;
 
 private:
     StateMachine *stateMachine;
@@ -87,7 +87,7 @@ public:
     void unInhibit() override;
     void overridePower() override;
     void unOverride() override;
-    void printCurrentState() const override;
+    String currentStateName() override;
 
 private:
     StateMachine *stateMachine;
@@ -103,7 +103,7 @@ public:
     void unInhibit() override;
     void overridePower() override;
     void unOverride() override;
-    void printCurrentState() const override;
+    String currentStateName() override;
 
 private:
     StateMachine *stateMachine;
