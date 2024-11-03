@@ -3,6 +3,7 @@
 #include <HTTPClient.h>
 #include <ArduinoJson.h>
 #include <Adafruit_SSD1306.h>
+#include <appliance_state.h>
 
 #define SCREEN_WIDTH 128 // OLED display width, in pixels
 #define SCREEN_HEIGHT 64 // OLED display height, in pixels
@@ -53,6 +54,9 @@ Make this downloadable one day
 class Appliance
 {
 public:
+  StateMachine sm;
+
+
   // How often, minutes, can the power by cycled?
   int PowerCycleTime()
   {
@@ -83,6 +87,8 @@ public:
   void UpdatePowerStatus(PowerReading reading) {
     
   }
+
+
 };
 
 void initWiFi();
