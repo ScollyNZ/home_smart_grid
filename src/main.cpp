@@ -96,6 +96,9 @@ void setup() {
 
   String jwt = generateJWT(privateKey, clientEmail);
 
+  Serial.println("JWT:");
+  Serial.println(jwt);  
+
   client.setInsecure(); //for testing only. Remove this for production. Use client.setCACert() for proper certificate validation.
   if (client.connect(googleCloudHost, googleCloudPort)) {
     String request = "GET /v1/your-resource HTTP/1.1\r\n"
