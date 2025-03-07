@@ -94,6 +94,14 @@ void setup() {
     Serial.print(".");
   }
 
+  //format time to human readable string
+  struct tm timeinfo;
+  time_t now = time(nullptr);
+  gmtime_r(&now, &timeinfo);
+
+  Serial.print(asctime(&timeinfo)); 
+  Serial.println(" UTC");
+
   String jwt = generateJWT(privateKey, clientEmail);
 
   Serial.println("JWT:");
