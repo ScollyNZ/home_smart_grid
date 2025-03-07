@@ -37,9 +37,13 @@ String base64UrlEncode(const uint8_t* input, size_t length) {
 
 Serial.println("Base64 Encoding Step 2");
 
-  while (encoded.length() % 4) {
-    encoded += ""; // base64url doesn't pad with '='
-  }
+// Calculate the padding needed
+size_t padding = (3 - length % 3) % 3;
+
+//Remove the padding that standard base64 might have added.
+while (encoded.length() % 4 != 0) {
+  encoded = encoded.substring(0, encoded.length()-1);
+}
 
   Serial.println(encoded);
 
