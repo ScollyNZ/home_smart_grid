@@ -78,6 +78,9 @@ String generateJWT(const char* privateKey, const char* clientEmail) {
   mbedtls_pk_init(&pk);
   mbedtls_pk_parse_key(&pk, (const unsigned char*)privateKey, strlen(privateKey) + 1, NULL, 0);
 
+//log that key has been signed  =
+  Serial.println("Key has been signed");
+
   uint8_t hash[32];
   mbedtls_sha256((const unsigned char*)unsignedToken.c_str(), unsignedToken.length(), hash, 0);
 
