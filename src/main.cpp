@@ -20,6 +20,8 @@ String base64UrlEncode(const uint8_t* input, size_t length) {
   String encoded = "";
   static const char* base64_chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_";
 
+  Serial.println("Base64 Encoding Step 1");
+
   for (size_t i = 0; i < length; i += 3) {
     uint32_t val = input[i];
     val <<= 8;
@@ -33,9 +35,14 @@ String base64UrlEncode(const uint8_t* input, size_t length) {
     }
   }
 
+Serial.println("Base64 Encoding Step 2");
+
   while (encoded.length() % 4) {
     encoded += ""; // base64url doesn't pad with '='
   }
+
+  Serial.println(encoded);
+
   return encoded;
 }
 
