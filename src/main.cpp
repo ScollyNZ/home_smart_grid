@@ -10,9 +10,9 @@ const int googleCloudPort = 443;
 
 // WARNING: Hardcoding keys is extremely insecure. Use SPIFFS or a secure element in production.
 const char* privateKey = "-----BEGIN PRIVATE KEY-----\n"
-                         "YOUR_PRIVATE_KEY_HERE\n"
-                         "-----END PRIVATE KEY-----\n"; // Replace with your private key
-const char* clientEmail = "your-service-account-email@your-project.iam.gserviceaccount.com"; // Replace with your service account email
+                         "MIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQDWuvPS5TbgZjSv\n2GQcI1/5vbHGv4esF4ty5XIaSI1Q45hWsdccLj3ktIoGqj1MrUq8Kf5rNmShDJ0n\noeeUb+73775jqJauENxEoj1zAPnJ9JuoSLFwkEbNL/avkZKxIYIzSMkf5Lh56G7w\na41xgEB6IGkEBn1Icl9VC7x2edwuT2VkAXVAfJ2o9k11jgy5saZbCKsFCuQvLQZT\n4lu7jcUrmQ/mG3tzzI1703nku524KA4MZcEQdaA4LQBdnF5AjpJYBtlXx7BHUt6O\ni6TAhKhobHxVhT1LwqFc8exS+xUXdGeReu2l4nwi6C1GdgryJzGipQ/zKJ/5dKPR\n7IGKTXnzAgMBAAECggEAObT3ZtNz2n2NJj7MtKUrG1ZH6wY5A142ezO/ZOHfnH/1\nxkK38RpaRtbgCyeAHtWpcoUEmzJ8e62EpIyFzGYCfj4/V9AMYo4kbAt/4SK/fm9O\nz7xtdzdG18jOjmNcXV8IexjR+FDC5Pw6qED3O6wAZ/HC1zKZQ7l89kGXre1U51qv\n4p8Jw4j72i9GjV9IqJbA8ko/3aaeg5TsXs3bFFEr05YQ4xpo1S1mXhNJFALFbpG2\nuRIH4kmBXWy7z8tZwC09VtF5D+s60gphmsBUspCOVzrd0UFCkkEeZA6V3GZWxSqi\nDle/5i4aDjTfJvcvQZpyBgOTZfj7A/vYup+iHL9JxQKBgQDz05wyDmbzmJMl+DTo\n6htt45s3WPX6TyH5z144nVddUJFW/nucim9ch00/bjMangqiquf+/Ev+u1VI7hmB\niTxSs9toQCGVHH5cMFwnOZ20rzezJn/5oFGYIYIqV3OB1H2IHaBWhgPOuBVjsmIj\ncrbS0vLUFqekDEUOYzgXmcWKvQKBgQDhc3UMn1dzsz6NJW11pUEnOE5O3QlGmzwZ\nMGBTBfbbIyIcd80pxChxTXSPBivucj8fRyv0fxtA2+/zUApOoKWI4C5DaPf6oj2U\n5Bk+vJk4M5qAhVJgL/o1kayAUf8FwTXsS3EXQLCtdNbSrgZ8Mf4qfiGCQRiSNog6\n+xKPzE26bwKBgQCQ946VgFSbnmpWl+U1WgNm6X1egej1otjrguxdMsc/tuhC1dk+\nsFwXomY+QVHnEHH4Vy7KPs0cLds+GjpV9vdDoKXhrMeKtT83ppUTyUDHramrPUe3\nbic1ES8n54jId0MPi7XJ27Il1PL6rJOGyeyDGmK/0Jxpf9YLANjXx1hY7QKBgHS+\nxgEITk/ipOSQWhNOxONbW+moulHutvtQOsEjWIZ3tgVJ4FrdchfiBRa/Gma6kIdQ\n4qkUXPeELMgxTXUT6URs2mgb5jXKZ9s/FveO0ETzK/GbmGGo1oeA7PPyAf5n49V9\n540j+ZmI5Glqpn8PoE8+y3lY3jFwvbDVLPJ72FBPAoGBALxift5dGhViAwGQXI0n\nhDsb90J4ih0cYR8jYoZ9ts5RsitGSNdqsO/DvNfRTjLGz0M6Vq6sXW3neiiSItO8\nn1o1H4kDHWYNmPji1JfviVOYKASg5nLIk6zF1laMu8eTSPec4uYg02mBPbo6aPA8\nZ9bvQ4t8hNidtVCwmuqdAXu0\n"
+                         "-----END PRIVATE KEY-----\n";
+const char* clientEmail = "stormwater-esp@clean-room-client.iam.gserviceaccount.com"; 
 
 WiFiClientSecure client;
 
