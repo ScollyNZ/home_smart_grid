@@ -90,6 +90,11 @@ String generateJWT(const char* privateKey, const char* clientEmail) {
   mbedtls_pk_free(&pk);
 
   String encodedSignature = base64UrlEncode(signature, sig_len);
+  // log unsighed token and encoded signature
+  Serial.println("Unsigned Token:");
+  Serial.println(unsignedToken);
+  Serial.println("Encoded Signature:");
+  Serial.println(encodedSignature);
 
   return unsignedToken + "." + encodedSignature;
 }
