@@ -48,7 +48,11 @@ String generateJWT(const char* privateKey, const char* clientEmail) {
   serializeJson(headerDoc, header);
   String encodedHeader = base64UrlEncode((const uint8_t*)header.c_str(), header.length());
 
-Serial.println(encodedHeader);
+//print raw header and then encoded header
+  Serial.println("Header:");
+  Serial.println(header);
+  Serial.println("Encoded Header:");
+  Serial.println(encodedHeader);  
 
   // Payload
   JsonDocument payloadDoc;
@@ -60,6 +64,12 @@ Serial.println(encodedHeader);
   String payload;
   serializeJson(payloadDoc, payload);
   String encodedPayload = base64UrlEncode((const uint8_t*)payload.c_str(), payload.length());
+
+//print payload and encded payload
+  Serial.println("Payload:");
+  Serial.println(payload);
+  Serial.println("Encoded Payload:");
+  Serial.println(encodedPayload); 
 
   String unsignedToken = encodedHeader + "." + encodedPayload;
 
