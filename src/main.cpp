@@ -143,7 +143,7 @@ void setup() {
 
   client.setInsecure(); //for testing only. Remove this for production. Use client.setCACert() for proper certificate validation.
   if (client.connect(googleCloudHost, googleCloudPort)) {
-    String request = "GET /v1/your-resource HTTP/1.1\r\n"
+    String request = "GET /v1/projects/clean-room-client/datasets HTTP/1.1\r\n"
                      "Host: " + String(googleCloudHost) + "\r\n"
                      "Authorization: Bearer " + jwt + "\r\n"
                      "Connection: close\r\n\r\n";
