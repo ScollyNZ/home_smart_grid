@@ -48,6 +48,8 @@ String generateJWT(const char* privateKey, const char* clientEmail) {
   serializeJson(headerDoc, header);
   String encodedHeader = base64UrlEncode((const uint8_t*)header.c_str(), header.length());
 
+Serial.println(encodedHeader);
+
   // Payload
   JsonDocument payloadDoc;
   payloadDoc["iss"] = clientEmail;
