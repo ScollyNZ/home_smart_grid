@@ -2,6 +2,7 @@
 #include <WiFiClientSecure.h>
 #include <ArduinoJson.h>
 #include <mbedtls/sha256.h>
+#include <mbedtls/base64.h>
 
 const char* ssid = "scoltock";
 const char* password = "nowireshere";
@@ -17,37 +18,34 @@ const char* clientEmail = "stormwater-esp@clean-room-client.iam.gserviceaccount.
 WiFiClientSecure client;
 
 String base64UrlEncode(const uint8_t* input, size_t length) {
-  String encoded = "";
-  static const char* base64_chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_";
+  size_t olen;
+  unsigned char* output = (unsigned char*)malloc(length * 2); // Allocate enough memory
 
-  Serial.println("Base64 Encoding Step 1");
+  if (output == NULL) {
+    Serial.println("Memory allocation failed");
+    return "";
+  }
 
-  for (size_t i = 0; i < length; i += 3) {
-    uint32_t val = input[i];
-    val <<= 8;
-    if (i + 1 < length) val |= input[i + 1];
-    val <<= 8;
-    if (i + 2 < length) val |= input[i + 2];
+  mbedtls_base64_encode(output, length * 2, &olen, input, length);
 
-    for (int j = 0; j < 4; j++) {
-      if (i * 8 + j * 6 > length * 8) break;
-      encoded += base64_chars[(val >> (18 - j * 6)) & 0x3F];
+  String encoded = String((char*)output, olen);
+  free(output);
+
+  //Base64URL encoding. remove padding and replace unsafe characters.
+  String base64Url = "";
+  for(int i = 0; i < encoded.length(); i++){
+    if(encoded[i] == '+'){
+      base64Url += '-';
+    }else if(encoded[i] == '/'){
+      base64Url += '_';
+    }else if(encoded[i] == '='){
+      //remove padding
+    }else{
+      base64Url += encoded[i];
     }
   }
 
-Serial.println("Base64 Encoding Step 2");
-
-// Calculate the padding needed
-size_t padding = (3 - length % 3) % 3;
-
-//Remove the padding that standard base64 might have added.
-while (encoded.length() % 4 != 0) {
-  encoded = encoded.substring(0, encoded.length()-1);
-}
-
-  Serial.println(encoded);
-
-  return encoded;
+  return base64Url;
 }
 
 String generateJWT(const char* privateKey, const char* clientEmail) {
