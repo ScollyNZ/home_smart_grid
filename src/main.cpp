@@ -78,8 +78,7 @@ String generateJWT(const char* privateKey, const char* clientEmail) {
   mbedtls_pk_init(&pk);
   mbedtls_pk_parse_key(&pk, (const unsigned char*)privateKey, strlen(privateKey) + 1, NULL, 0);
 
-//log that key has been signed  =
-  Serial.println("Key has been signed");
+
 
   uint8_t hash[32];
   mbedtls_sha256((const unsigned char*)unsignedToken.c_str(), unsignedToken.length(), hash, 0);
@@ -88,8 +87,14 @@ String generateJWT(const char* privateKey, const char* clientEmail) {
   uint8_t signature[256];
   mbedtls_pk_sign(&pk, MBEDTLS_MD_SHA256, hash, sizeof(hash), signature, &sig_len, NULL, NULL);
   mbedtls_pk_free(&pk);
+ //log that key has been signed  =
+ Serial.println("Key has been signed Step 3");
 
   String encodedSignature = base64UrlEncode(signature, sig_len);
+
+//log key has been encoded
+  Serial.println("Key has been encoded");
+
   // log unsighed token and encoded signature
   Serial.println("Unsigned Token:");
   Serial.println(unsignedToken);
