@@ -192,6 +192,9 @@ void publishMessage(const String& message) {
                      "Connection: close\r\n"
                      "Content-Length: ";
 
+    Serial.println("Request:");
+    Serial.println(request);  
+
     JsonDocument jsonDoc;
     jsonDoc["messages"][0]["data"] = base64EncodeMessage(message);
     String json;
