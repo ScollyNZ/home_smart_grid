@@ -11,6 +11,9 @@ const int googleCloudPort = 443;
 const char* projectId = "home-automation";
 const char* topicId = "telemetry";
 
+void publishMessage(const String& message);
+
+
 // WARNING: Hardcoding keys is extremely insecure. Use SPIFFS or a secure element in production.
 const char* privateKey = "-----BEGIN PRIVATE KEY-----\n"
                          "MIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCbhDvRsKy+lyqI\nVSpbwx1IikwLgMJFnaJm7+xOJDPBaC22FlwVOhpgJzqedu/6kg3Ja6rCKrfCIU+B\nn5vsbRWDpAYU7A6N8smDADYX6A/kMqDUENVa7KsRMPjLZvdOLn0sHC43dUkWbX6f\n5LvYnmxR9mwcLdEhOgUVIbOWX5/G8uEt+S6esUkOruCYdc88gMlPQdQjo033Fx+V\nqqylbrCqVIGobd20z1LWqV3S6ahZ8xyTixRt7x9jy0mhp8nXH8l01WoiSAu32mAO\nzeZYrdPSjjEwwE1QVltSENHRpl1sSZgF0Me7geVye+dJwNyBwo/pSRpWT1sEHOUd\nTin65mbPAgMBAAECggEAMFkLWdTx12zakbjcatu9YlxwaNEWVJs9rn/feKmjl3jC\nYU4RQZ4nLgZ0IGi8katPcvOwih3KtCUz+Qn8aSO+oQbgxydeHP5CbKInrwX7zsd4\nnYVANzzFsBoH9wBjWSB11L1MFvy1BK50w9PSHHWgGlkgYiBSWGCXzOqF0PWYkDpc\nkWGjmZbagXhDFnFCNYIh6vLirtuqlHs6BBWtWxG2B82Zr2DOR8PENIIwm/IVm5OA\nh1y2/6K/yQ70c7Ncywcqs6DHoX+E5OghiOM/3VpPBWxWC54rJFbqXhCnRdvQvA9g\nPuJD+Q6U6veAAoQJ/pQt6fqm57Q8mjNZOWiwI8hc/QKBgQDYjQtjon4KSbTXX7Tl\ntzprhn6JcANL+tQ5VIkeaX7bIam7q1/l4XUDOfTLh8quie9l3xOo+EwekApqMHH4\nGTtf7uGP06fek+lohJMS+NYvUtnO4zQyS+uNwDPoAFXrpl1wWqfYvsZ+ljKEU2sM\nj6F5BXxQ35xepeHjbzoDjGSeWwKBgQC32NIJpH+88Lrg8v1nNV8Z1uaQzBWLlgy6\nBc3mgSezsMp30tfudSxctrP989zie++vJ76p25pHLFaGXNa/lk0hSPHbpeeYeB5L\ngOWbyWi0M6vFcgnxvFn7hoeAGQ7GEkocMZiV4v+w/4AWX6776IcSM4J+QmJXcCEr\nC85vI0grnQKBgCcTfISkI75TgpCCsq/pGl+gy2Cdl9q0Dmux93RHcR61ul0lFY7z\n2huU77lybX6FYW+ui2uoMoQpVdfHmik81FwBTS6Y8OfXJP05PxjjUjMD7k3I7fhN\nftn7XuJ0fQyi3qWRlkwkUMky7Ta3ns+Lc4XVGZO2Zg8mO9bAkWVmhhmVAoGABTH/\nXX5kjbZP0aOMPapocZZ9FYJu6W7oFSms0+K6eH16e0BeEcMF6ejP1VFa4JuX/l8l\nKC+ogHJkT4+4EdnxfAtPqmFZ1hku4ftWgbyDVPRQ2leKqGYmNNFsatZKcJZ7uag9\nI58ykpHl0LwLedrsVjtWaLL/jHECvvCqeMGKfJECgYEAlhnd25c8aJdvvBWPO+Qu\n97bX8+zHsX7VI5lnGRY/woEBP+28cuIlHWSPci+f4DC5vDrf2H8+S/5Z+nNHtNxq\nDLchqANHXZnhEDTtLhqYIqedBg4vngfsIvX16bmWgB8ogMDAa2yFS6Upw/2dKgln\nitTO6c1Qb1nnL1rWAmzI6d8=\n"
@@ -149,13 +152,15 @@ void setup() {
   gmtime_r(&now, &timeinfo);
 
   Serial.print(asctime(&timeinfo)); 
-  Serial.println(" UTC");
+ /*
 
   String jwt = generateJWT(privateKey, clientEmail);
 
   Serial.println("JWT:");
   Serial.println(jwt);  
+  */
 
+  /*
   client.setInsecure(); //for testing only. Remove this for production. Use client.setCACert() for proper certificate validation.
   if (client.connect(googleCloudHost, googleCloudPort)) {
     String request = "GET /v1/projects/clean-room-client/datasets HTTP/1.1\r\n"
@@ -177,7 +182,9 @@ void setup() {
     client.stop();
   } else {
     Serial.println("Connection failed");
-  }
+  }*/
+  publishMessage("Hello from ESP32!");
+  Serial.println("Message published");
 }
 
 void publishMessage(const String& message) {
@@ -217,8 +224,6 @@ void publishMessage(const String& message) {
   } else {
     Serial.println("Connection failed");
   }
-  publishMessage("Hello from ESP32!");
-  Serial.println("Message published");
 }
 
 void loop() {
