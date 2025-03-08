@@ -4,4 +4,25 @@ curl -H "Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJz
 
 alias gcurl='curl -H "Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdG9ybXdhdGVyLWVzcEBjbGVhbi1yb29tLWNsaWVudC5pYW0uZ3NlcnZpY2VhY2NvdW50LmNvbSIsInNjb3BlIjoiaHR0cHM6Ly93d3cuZ29vZ2xlYXBpcy5jb20vYXV0aC9jbG91ZC1wbGF0Zm9ybSIsImF1ZCI6Imh0dHBzOi8vdGltZXNlcmllc2luc2lnaHRzLmdvb2dsZWFwaXMuY29tIiwiZXhwIjoxNzQxMzkzNDEzLCJpYXQiOjE3NDEzODk4MTN9.MKUnxOvrjHmF61AcCRX_5Uk50rQj8JSEDs-biGo4lJXzZPC_PoiPE5Wi3-LsENf7yqQF9Sej91bi2nZlk1LD2KUJYuxeulWLo1YIEZQmoJp-kuIfuPSlCbvptoYibWIKQWVlUor83IG_MVciJu2JkIj3FVQiq4CRUuV5_78R59zAFRDd3e0exvdZZg10UdqW08sERmI0juYBQUsKE_bYEM58-YaeNdb2rqnZgWNEoCJeRU9tnnYwaPCV87KFfokmLCbaGf9boe9ehV5iYaFNXVfiAdmt77UQA6zLvDxwT4SmVIr4-47AbQtWETQJtow0Y24ELwrvVxEsQuUE8CT_Pw" -H "Content-Type: application/json"'
 
-alias gcurl='curl -H "Authorization: Bearer ya29.a0AeXRPp5waE024GcyZ4vDIvqPRWgxSXSSBBlYm_kSvwwSvZIRvw-c5mF9ZYFIh7bYRzOHY0A1ok7d_g-NLojly2JibolmwZLQutccdR_nRh-AY-kzoiOEb_0KlaNvlJg0cKvjG9QbOGhBiJnEBCv9ehZLznQe5bSBGILWX2J0gDNwzwaCgYKAcsSARASFQHGX2Miktbxaa6qFkmMQmgEbbGMog0181" -H "Content-Type: application/json"'
+alias gcurl='curl -H "Authorization: Bearer eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdG9ybXdhdGVyQGhvbWUtYXV0b21hdGlvbi00NTMxMDEuaWFtLmdzZXJ2aWNlYWNjb3VudC5jb20iLCJzY29wZSI6Imh0dHBzOi8vd3d3Lmdvb2dsZWFwaXMuY29tL2F1dGgvcHVic3ViIiwiYXVkIjoiaHR0cHM6Ly9wdWJzdWIuZ29vZ2xlYXBpcy5jb20iLCJleHAiOjE3NDE0MDA0NDMsImlhdCI6MTc0MTM5Njg0M30.dvTdkRo_MpO93Fo-Jt4XjqeomzNJc0lcL-Ak61NH1QfrRdqfzZ9_yBOgyWQlFVvEyb03wjLZrexuF2VkQUO5rX0HwJAxeIrd8OwEY1uUUedNORYCDXijwEmPT2lQ988GNihbHH-5Uf5hIxeda4AW433leV7_zIxpu8Hh6MRbGS5ikgwprmY_dqsydZY4OA82UDVxaZDqtVEh23HYFLJ3yZMsP-v6cIEyY2brfFQACDWmLph6i8lPB68g3D74G_PLPaqpWjlcPjfc3ORMmvFH_MSc4ar31ITkXH-2WgKG3ISaXdLBqtobUKJiQ7BN9IsiOqIRjf6ar4TJpD0yKHT0EQ" -H "Content-Type: application/json"'
+
+ya29.a0AeXRPp4602f_rwv6D5ued9NW_iPYJmWP0mPHm4cc5DK7WBdJgzGo67yH2JFjC9DunfhnwRDYV8LUJCPScUOL9cZfwstUC_u7j3NBcjHSp-xmrQ3xgu6WNXLw0c7TmSD8PDqyLVSsStz6o5qy3cFz9SeOjqreErIFcNMSCfE-XvQ2RQaCgYKAboSARASFQHGX2MiioCCR8BhMR5ybTBGIqrQpA0181
+
+alias gcurl='curl -H "Authorization: Bearer ya29.a0AeXRPp4602f_rwv6D5ued9NW_iPYJmWP0mPHm4cc5DK7WBdJgzGo67yH2JFjC9DunfhnwRDYV8LUJCPScUOL9cZfwstUC_u7j3NBcjHSp-xmrQ3xgu6WNXLw0c7TmSD8PDqyLVSsStz6o5qy3cFz9SeOjqreErIFcNMSCfE-XvQ2RQaCgYKAboSARASFQHGX2MiioCCR8BhMR5ybTBGIqrQpA0181" -H "Content-Type: application/json"'
+
+
+
+
+gcurl -X POST \
+  "https://pubsub.googleapis.com/v1/projects/home-automation/topics/telemetry:publish" \
+  -d '{
+    "messages": [
+      {
+        "data": "SGVsbG8gZnJvbSBjdXJsCg=="
+      }
+    ]
+  }'
+
+  gcurl -X GET \
+  "https://pubsub.googleapis.com/v1/projects/home-automation/topics/" 
+  

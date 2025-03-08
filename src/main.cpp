@@ -8,7 +8,7 @@ const char* ssid = "scoltock";
 const char* password = "nowireshere";
 const char* googleCloudHost = "pubsub.googleapis.com";
 const int googleCloudPort = 443;
-const char* projectId = "home-automation";
+const char* projectId = "home-automation-453101";
 const char* topicId = "telemetry";
 
 void publishMessage(const String& message);
