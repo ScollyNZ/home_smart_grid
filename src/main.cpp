@@ -150,6 +150,9 @@ void setup() {
   gmtime_r(&now, &timeinfo);
 
   Serial.print(asctime(&timeinfo)); 
+
+  Serial.println("Private Key: ");
+  Serial.println(privateKey);
  /*
 
   String jwt = generateJWT(privateKey, clientEmail);
