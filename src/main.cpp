@@ -214,6 +214,8 @@ void publishMessage(const String& message) {
   } else {
     Serial.println("Connection failed");
   }
+  publishMessage("Hello from ESP32!");
+  Serial.println("Message published");
 }
 
 void loop() {
