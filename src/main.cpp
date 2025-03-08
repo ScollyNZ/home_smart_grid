@@ -50,6 +50,19 @@ String base64UrlEncode(const uint8_t* input, size_t length) {
   return base64Url;
 }
 
+String base64EncodeMessage(const String& message){
+  size_t olen;
+  unsigned char* output = (unsigned char*)malloc(message.length() * 2);
+  if (output == NULL) {
+    Serial.println("Memory allocation failed");
+    return "";
+  }
+  mbedtls_base64_encode(output, message.length() * 2, &olen, (const unsigned char*)message.c_str(), message.length());
+  String encoded = String((char*)output, olen);
+  free(output);
+  return encoded;
+}
+
 String generateJWT(const char* privateKey, const char* clientEmail) {
   // Header
   JsonDocument headerDoc;
@@ -68,7 +81,7 @@ String generateJWT(const char* privateKey, const char* clientEmail) {
   // Payload
   JsonDocument payloadDoc;
   payloadDoc["iss"] = clientEmail;
-  payloadDoc["scope"] = "https://www.googleapis.com/auth/cloud-platform"; // Adjust scope
+  payloadDoc["scope"] = "https://www.googleapis.com/auth/pubsub"; // Adjust scope
   payloadDoc["aud"] = "https://" + String(googleCloudHost); // Adjust audience
   payloadDoc["exp"] = time(nullptr) + 3600; // Expires in 1 hour
   payloadDoc["iat"] = time(nullptr);
@@ -149,6 +162,42 @@ void setup() {
                      "Host: " + String(googleCloudHost) + "\r\n"
                      "Authorization: Bearer " + jwt + "\r\n"
                      "Connection: close\r\n\r\n";
+    client.print(request);
+
+    while (client.connected()) {
+      String line = client.readStringUntil('\n');
+      if (line == "\r") {
+        break;
+      }
+      Serial.println(line);
+    }
+    while (client.available()) {
+      Serial.write(client.read());
+    }
+    client.stop();
+  } else {
+    Serial.println("Connection failed");
+  }
+}
+
+void publishMessage(const String& message) {
+  String jwt = generateJWT(privateKey, clientEmail);
+  client.setInsecure(); // Remove for production!
+  if (client.connect(googleCloudHost, googleCloudPort)) {
+    String url = "/v1/projects/" + String(projectId) + "/topics/" + String(topicId) + ":publish";
+    String request = "POST " + url + " HTTP/1.1\r\n"
+                     "Host: " + String(googleCloudHost) + "\r\n"
+                     "Authorization: Bearer " + jwt + "\r\n"
+                     "Content-Type: application/json\r\n"
+                     "Connection: close\r\n"
+                     "Content-Length: ";
+
+    JsonDocument jsonDoc;
+    jsonDoc["messages"][0]["data"] = base64EncodeMessage(message);
+    String json;
+    serializeJson(jsonDoc, json);
+    request += String(json.length()) + "\r\n\r\n" + json;
+
     client.print(request);
 
     while (client.connected()) {
